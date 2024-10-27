@@ -55,7 +55,7 @@ const Scraper: React.FC = () => {
           <li key={index}>
             <h2>{product.title}</h2>
             <p>{product.price}</p>
-            <Image src={product.imageUrl} alt={product.title} />
+            <Image src={product.imageUrl} alt={product.title} width={100} height={100} />
           </li>
         ))}
       </ul>
