@@ -1,15 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-
-  const { url } = req.body;
+export async function POST(request: Request) {
+  const { url } = await request.json();
 
   try {
     const response = await fetch(url);
@@ -111,10 +104,8 @@ export default async function handler(
       linkedIn: $(".css-107cmgv").attr("title"),
     };
 
-    return res.status(200).json(profile);
+    return NextResponse.json(profile);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Failed to scrape profile" + error });
+    return NextResponse.json({ message: "Failed to scrape profile" + error });
   }
 }
