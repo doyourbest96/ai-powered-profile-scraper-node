@@ -21,6 +21,7 @@ export default function ProfileScraper() {
       if (!response.ok) throw new Error("Failed to fetch profile");
 
       const data = await response.json();
+      console.log("data: ", data);
       setProfile(data);
       setError("");
     } catch (err) {
@@ -58,8 +59,8 @@ export default function ProfileScraper() {
               <Image
                 src={profile.avatar}
                 alt={profile.name}
-                width={100}
-                height={100}
+                width={160}
+                height={160}
                 className="rounded-full"
               />
             )}
@@ -68,47 +69,83 @@ export default function ProfileScraper() {
               <p>{profile.location}</p>
               <p>{profile.age} years old</p>
               <p>Last seen {profile.lastSeen}</p>
+              <p>LinkedIn: {profile?.linkedIn}</p>
             </div>
           </div>
 
           <div className="grid gap-6">
             <section>
-              <h2 className="text-xl font-semibold mb-2">About</h2>
+              <h2 className="text-xl font-semibold mb-4">About Me</h2>
+              <h3 className="font-semibold my-1">Intro</h3>
               <p>{profile.intro}</p>
+              <h3 className="font-semibold my-1">Life Story</h3>
+              <p>{profile.lifeStory}</p>
+              <h3 className="font-semibold my-1">Free Time</h3>
+              <p>{profile.freeTime}</p>
+              <h3 className="font-semibold my-1">Other</h3>
+              <p>{profile.other}</p>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-2">Startup</h2>
-              <h3>{profile.startup.name}</h3>
-              <p>{profile.startup.description}</p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold mb-2">
-                Co-founder Preferences
-              </h2>
+              <h2 className="text-xl font-semibold mb-4">My Background</h2>
+              <h3 className="font-semibold my-1">Impressive accomplishment</h3>
+              <p>{profile.accomplishments}</p>
+              <h3 className="font-semibold my-1">Education</h3>
               <ul className="list-disc pl-5">
-                {profile.cofounderPreferences.requirements.map((req, i) => (
-                  <li key={i}>{req}</li>
+                {profile.education.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+              <h3 className="font-semibold my-1">Employment</h3>
+              <ul className="list-disc pl-5">
+                {profile.employment.map((item, idx) => (
+                  <li key={idx}>{item}</li>
                 ))}
               </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-2">Interests</h2>
+              <h2 className="text-xl font-semibold mb-4">
+                {profile.startup?.name}
+              </h2>
+              <h3 className="font-semibold my-1">{profile.startup?.name}</h3>
+              <p>{profile.startup?.description}</p>
+              <h3 className="font-semibold my-1">Progress</h3>
+              <p>{profile.startup?.progress}</p>
+              <h3 className="font-semibold my-1">Funding Status</h3>
+              <p>{profile.startup?.funding}</p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold mb-4">
+                Co-founder Preferences
+              </h2>
+              <ul className="list-disc pl-5">
+                {profile.cofounderPreferences?.requirements.map((req, i) => (
+                  <li key={i}>{req}</li>
+                ))}
+              </ul>
+              <h3 className="font-semibold my-1">Ideal co-founder</h3>
+              <p>{profile.cofounderPreferences?.idealPersonality}</p>
+              <h3 className="font-semibold my-1">Equity expectations</h3>
+              <p>{profile.cofounderPreferences?.equity}</p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold mb-4">Interests</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <h3 className="font-medium">Shared</h3>
+                  <h3 className="font-semibold my-1">Shared</h3>
                   <ul className="list-disc pl-5">
-                    {profile.interests.shared.map((interest, i) => (
+                    {profile.interests?.shared.map((interest, i) => (
                       <li key={i}>{interest}</li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-medium">Personal</h3>
+                  <h3 className="font-semibold my-1">Personal</h3>
                   <ul className="list-disc pl-5">
-                    {profile.interests.personal.map((interest, i) => (
+                    {profile.interests?.personal.map((interest, i) => (
                       <li key={i}>{interest}</li>
                     ))}
                   </ul>
