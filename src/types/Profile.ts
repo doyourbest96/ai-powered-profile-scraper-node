@@ -1,4 +1,5 @@
 export type Profile = {
+  cfId: string;
   name: string;
   location: string;
   age: number;
@@ -11,16 +12,12 @@ export type Profile = {
   other: string;
   accomplishments: string;
   education: string[];
-  employment: Array<{
-    company: string;
-    role: string;
-    period: string;
-  }>;
-  startup: {
-    name: string;
-    description: string;
-    progress: string;
-    funding: string;
+  employment: string[];
+  startup?: {
+    name?: string;
+    description?: string;
+    progress?: string;
+    funding?: string;
   };
   cofounderPreferences: {
     requirements: string[];
@@ -32,4 +29,4 @@ export type Profile = {
     personal: string[];
   };
   linkedIn?: string;
-}
+};

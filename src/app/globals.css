@@ -19,3 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+section {
+  padding: 16px;
+  border: solid 1px #ccc;
+  border-radius: 6px;
+}
