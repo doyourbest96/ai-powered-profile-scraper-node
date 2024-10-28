@@ -24,7 +24,12 @@ export async function POST(request: Request) {
     if (!browser) {
       browser = await playwright.chromium.launch();
     }
-    const context = await browser.newContext();
+    const context = await browser.newContext({
+      ignoreHTTPSErrors: true,
+      extraHTTPHeaders: {
+        "Accept-Encoding": "gzip, deflate, br",
+      },
+    });
     const page = await context.newPage();
 
     await page.route("**/*.{png,jpg,jpeg,gif,css}", (route) => route.abort());
@@ -50,7 +55,10 @@ export async function POST(request: Request) {
       },
     ]);
 
-    await page.goto(url);
+    await page.goto(url, {
+      waitUntil: "domcontentloaded",
+      timeout: 30000,
+    });
     await page.waitForSelector(".css-139x40p");
 
     const content = await page.content();
@@ -72,7 +80,7 @@ export async function POST(request: Request) {
         .replace("Last seen ", "")
         .trim(),
       avatar: mainContent.find(".css-1bm26bw").attr("src"),
-
+      sumary: mainContent.find(".css-cyoc3t").text().trim(),
       intro: mainContent
         .find('span.css-19yrmx8:contains("Intro")')
         .next(".css-1tp1ukf")
@@ -115,18 +123,24 @@ export async function POST(request: Request) {
         .get(),
 
       startup: {
-        name: mainContent.find(".css-bcaew0 b").first().text().trim(),
-        description: mainContent
-          .find(
-            `span.css-19yrmx8:contains("${mainContent
-              .find(".css-bcaew0 b")
-              .first()
-              .text()
-              .trim()}")`
-          )
-          .next(".css-1tp1ukf")
-          .text()
-          .trim(),
+        name:
+          mainContent.find(".css-bcaew0 b").first().text().trim() !== ""
+            ? mainContent.find(".css-bcaew0 b").first().text().trim()
+            : "Potential Idea",
+        description:
+          mainContent.find(".css-bcaew0 b").first().text().trim() !== ""
+            ? mainContent
+                .find(
+                  `span.css-19yrmx8:contains("${mainContent
+                    .find(".css-bcaew0 b")
+                    .first()
+                    .text()
+                    .trim()}")`
+                )
+                .next(".css-1tp1ukf")
+                .text()
+                .trim()
+            : mainContent.find("div.css-1hla380").text().trim(),
         progress: mainContent
           .find('span.css-19yrmx8:contains("Progress")')
           .next(".css-1tp1ukf")

@@ -77,10 +77,10 @@ export default function ProfileScraper() {
               <div className="flex flex-row gap-4">
                 <h1 className="text-2xl font-bold">{profile.name}</h1>
                 <button
-                  className="p-1 text-xs rounded-md border text-white bg-blue-500 hover:opacity-50"
+                  className="p-1.5 text-xs rounded-md border text-white bg-blue-400 hover:bg-blue-500"
                   onClick={() => copyToClipboard(SITE_URL + profile.userId)}
                 >
-                  <FaRegCopy className="w-3 h-3" />
+                  <FaRegCopy className="w-4 h-4" />
                 </button>
               </div>
               <p>{profile.location}</p>
@@ -91,6 +91,10 @@ export default function ProfileScraper() {
           </div>
 
           <div className="grid gap-6">
+            <section>
+              <p>{profile.sumary}</p>
+            </section>
+
             <section>
               <h2 className="text-xl font-semibold mb-4">About Me</h2>
               <h3 className="font-semibold my-1">Intro</h3>

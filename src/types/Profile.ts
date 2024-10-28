@@ -6,6 +6,7 @@ export type Profile = {
   lastSeen: string;
   videoUrl?: string;
   avatar?: string;
+  sumary: string;
   intro: string;
   lifeStory: string;
   freeTime: string;
