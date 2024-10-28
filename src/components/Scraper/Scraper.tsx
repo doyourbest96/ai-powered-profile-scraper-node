@@ -1,7 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
+import { FaRegCopy } from "react-icons/fa6";
 import { Profile } from "@/types/Profile";
+import { toast } from "react-toastify";
+
+const SITE_URL = "https://www.startupschool.org/cofounder-matching/candidate/";
+
+const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text);
+  toast.success("Link copied to clipboard");
+};
 
 export default function ProfileScraper() {
   const [url, setUrl] = useState("");
@@ -21,7 +30,7 @@ export default function ProfileScraper() {
       if (!response.ok) throw new Error("Failed to fetch profile");
 
       const data = await response.json();
-      console.log("data: ", data);
+      // console.log("data: ", data);
       setProfile(data);
       setError("");
     } catch (err) {
@@ -65,7 +74,15 @@ export default function ProfileScraper() {
               />
             )}
             <div>
-              <h1 className="text-2xl font-bold">{profile.name}</h1>
+              <div className="flex flex-row gap-4">
+                <h1 className="text-2xl font-bold">{profile.name}</h1>
+                <button
+                  className="p-1 text-xs rounded-md border text-white bg-blue-500 hover:opacity-50"
+                  onClick={() => copyToClipboard(SITE_URL + profile.userId)}
+                >
+                  <FaRegCopy className="w-3 h-3" />
+                </button>
+              </div>
               <p>{profile.location}</p>
               <p>{profile.age} years old</p>
               <p>Last seen {profile.lastSeen}</p>

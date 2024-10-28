@@ -20,26 +20,18 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Add authentication headers or cookies
-    const response = await fetch(url, {
-      headers: {
-        Cookie:
-          "_sso.key=VwUqhHZdXDy7mhEE2GSiQNxL1AUv2SoK; _ga=GA1.2.629030217.1729854868; _ga_W6KFEJ0W5Z=GS1.2.1729854871.1.0.1729854871.0.0.0; ph_phc_kqzJJG8aN5nevL0k1oW4Z8iAGswsxBnsWqIBcOuxjah_posthog=%7B%22distinct_id%22%3A%22be7dc8c8-0824-4ad5-baa9-eaa21e608e3b%22%2C%22%24sesid%22%3A%5B1730079239247%2C%220192d0b8-e36d-7e0f-a080-6e7a177cf6ad%22%2C1730078630765%5D%2C%22%24epp%22%3Atrue%7D; _sus_session=UbksAzG4x3uWvSP0uH8wkIsscdsQ0V%2BgRh6Ad%2FoWTVkmDKPy0uW8sjrTmTy58TN4Hb87UHRi54PpWGOFtXmE1QL1jrmESnpbxLq5BzGXVQUKFSi6q3V3fWFJsfxppZ%2Bss%2B7T5EvGTNbM9PNk4dA9Z%2B0sSzGWSvyEr9vNw6Xrpf7pYb3ZFcjMPVv%2BI%2BILuLzr1GdVa26OzPyNB8aqr2TmWVjmxWM%2BjgG52gfNXNe5YUaMBIs4Uj0P6KmeVxGzkp%2Fbr3wwzsXgadQ9v%2FGDWCw%2FxqlhnT0%3D--%2F7JcGIKENvlvvoHi--hQ9%2BqPqIoIfK1p0UuWqw9Q%3D%3D",
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      },
-    });
-
-    if (response.redirected || response.url.includes("sign_in")) {
-      return NextResponse.json(
-        { error: "Authentication required" },
-        { status: 401 }
-      );
+    let browser;
+    if (!browser) {
+      browser = await playwright.chromium.launch();
     }
-
-    const browser = await playwright.chromium.launch();
     const context = await browser.newContext();
     const page = await context.newPage();
+
+    await page.route("**/*.{png,jpg,jpeg,gif,css}", (route) => route.abort());
+    await page.route("**/*.{woff,woff2,ttf,otf}", (route) => route.abort());
+    await page.route("**/{analytics,tracking,advertisement}/**", (route) =>
+      route.abort()
+    );
 
     // Set cookies before navigation
     await context.addCookies([
@@ -65,10 +57,10 @@ export async function POST(request: Request) {
     const $ = cheerio.load(content);
 
     const mainContent = $(".css-139x40p");
-    console.log("mainContent: ", mainContent);
+    // console.log("mainContent: ", mainContent);
 
     const profile = {
-      cfId: mainContent.find(".css-1s8r69b").text().trim(),
+      userId: page.url().split("/").pop(),
       name: mainContent.find(".css-1s8r69b").text().trim(),
       location: mainContent.find('[title="Location"]').text().trim(),
       age: parseInt(

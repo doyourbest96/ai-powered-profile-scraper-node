@@ -1,5 +1,5 @@
 export type Profile = {
-  cfId: string;
+  userId: string;
   name: string;
   location: string;
   age: number;
