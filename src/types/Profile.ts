@@ -2,7 +2,7 @@ export type Profile = {
   userId: string;
   name: string;
   location: string;
-  age: number;
+  age: number | null;
   lastSeen: string;
   videoUrl?: string;
   avatar?: string;
