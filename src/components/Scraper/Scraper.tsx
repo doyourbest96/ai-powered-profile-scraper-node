@@ -84,7 +84,7 @@ export default function ProfileScraper() {
                 </button>
               </div>
               <p>{profile.location}</p>
-              <p>{profile.age} years old</p>
+              <p>{profile?.age} years old</p>
               <p>Last seen {profile.lastSeen}</p>
               <p>LinkedIn: {profile?.linkedIn}</p>
             </div>
