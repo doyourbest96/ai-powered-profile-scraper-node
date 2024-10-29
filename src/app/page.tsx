@@ -1,6 +1,7 @@
 import Head from "next/head";
-import Scraper from "../components/Scraper/Scraper";
+// import Scraper from "../components/Scraper/Scraper";
 import { ToastContainer } from "react-toastify";
+import Dashboard from "@/sections/Dashboard";
 
 export default function Home() {
   return (
@@ -11,7 +12,8 @@ export default function Home() {
       </Head>
 
       <main>
-        <Scraper />
+        {/* <Scraper /> */}
+        <Dashboard />
         <ToastContainer
           position="top-right"
           autoClose={2500}

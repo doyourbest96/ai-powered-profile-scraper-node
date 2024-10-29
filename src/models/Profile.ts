@@ -36,6 +36,11 @@ const ProfileSchema = new mongoose.Schema({
   },
   linkedIn: String,
   createdAt: { type: Date, default: Date.now },
+  status: {
+    type: String,
+    enum: ["default", "active", "pending", "archived"],
+    default: "default",
+  }
 });
 
 export const Profile =
