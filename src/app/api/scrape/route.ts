@@ -4,8 +4,8 @@ import playwright from "playwright";
 import { connectDB } from "@/lib/mongodb";
 import { Profile } from "@/models/Profile";
 
-export async function POST(request: Request) {
-  const { url } = await request.json();
+export async function POST() {
+  const url = process.env.NEXT_PUBLIC_FETCH_URL;
 
   if (!url) {
     return NextResponse.json({ error: "URL is required" }, { status: 400 });
