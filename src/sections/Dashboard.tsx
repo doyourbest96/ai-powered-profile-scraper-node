@@ -1,9 +1,10 @@
 "use client";
 import React, { useCallback, useEffect } from "react";
 import { ProfileModel, FilterModel } from "@/types";
+import ProfileOverview from "@/sections/ProfileOverview";
 
 const Dashboard = () => {
-  // const [profile, setProfile] = React.useState<ProfileModel | null>(null);
+  const [profile, setProfile] = React.useState<ProfileModel | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [profiles, setProfiles] = React.useState<ProfileModel[]>([]);
   const [filter, setFilter] = React.useState<FilterModel>({
@@ -57,18 +58,11 @@ const Dashboard = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchProfiles();
-  };
-
   return (
     <>
-      <div className="p-5 space-y-6">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-6 rounded-lg shadow-sm"
-        >
+      <div className="relative p-5">
+        <ProfileOverview profile={profile} />
+        <div className="bg-white p-6 rounded-lg shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label
@@ -122,24 +116,21 @@ const Dashboard = () => {
               />
             </div>
           </div>
-        </form>
-        <div className="overflow-x-auto">
+        </div>
+        <div className="overflow-x-scroll">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="text-left bg-gray-50">
               <tr>
-                <th className="py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
+                <th className="p-4 font-semibold text-gray-600 uppercase">
                   Name
                 </th>
-                <th className="py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
+                <th className="p-4 font-semibold text-gray-600 uppercase">
                   Location
                 </th>
-                <th className="py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
+                <th className="p-4 font-semibold text-gray-600 uppercase">
                   Funding Status
                 </th>
-                <th className="py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
-                  LinkedIn
-                </th>
-                <th className="py-3 text-left font-medium text-gray-500 uppercase tracking-wider">
+                <th className="p-4 font-semibold text-gray-600 uppercase">
                   Last Seen
                 </th>
               </tr>
@@ -155,32 +146,19 @@ const Dashboard = () => {
                 profiles.map((profile, index) => (
                   <tr
                     key={profile.userId || index}
-                    className="even:bg-blue-100 hover:bg-gray-300"
+                    className="even:bg-blue-100 hover:bg-gray-300 hover:cursor-pointer"
+                    onClick={() => setProfile(profile)}
                   >
-                    <td className="whitespace-nowrap">
+                    <td className="px-2 py-1 whitespace-nowrap">
                       {profile.name || "N/A"}
                     </td>
-                    <td className="whitespace-nowrap">
+                    <td className="px-2 py-1 whitespace-nowrap">
                       {profile.location || "N/A"}
                     </td>
-                    <td className="max-w-80 text-ellipsis overflow-hidden whitespace-nowrap">
+                    <td className="px-2 py-1 max-w-80 text-ellipsis overflow-hidden whitespace-nowrap">
                       {profile.startup?.funding || "N/A"}
                     </td>
-                    <td className="whitespace-nowrap">
-                      {profile.linkedIn ? (
-                        <a
-                          href={profile.linkedIn}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          View Profile
-                        </a>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td className="whitespace-nowrap">
+                    <td className="px-2 py-1 whitespace-nowrap">
                       {profile.lastSeen || "N/A"}
                     </td>
                   </tr>
