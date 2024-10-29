@@ -11,9 +11,9 @@ const copyToClipboard = (text: string) => {
   toast.success("Link copied to clipboard");
 };
 
-const Profile = ({ profile }: { profile: ProfileModel }) => {
+const ProfileOverview = ({ profile }: { profile: ProfileModel | null }) => {
   return (
-    <div>
+    <>
       {profile && (
         <div className="bg-white rounded shadow p-6">
           <div className="flex items-center gap-6 mb-6">
@@ -129,8 +129,8 @@ const Profile = ({ profile }: { profile: ProfileModel }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
-export default Profile;
+export default ProfileOverview;
