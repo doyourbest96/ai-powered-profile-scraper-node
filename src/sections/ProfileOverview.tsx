@@ -111,7 +111,7 @@ const ProfileOverview = ({
                   Co-founder Preferences
                 </h2>
                 <ul className="list-disc pl-5">
-                  {profile.cofounderPreferences?.requirements.map((req, i) => (
+                  {profile.cofounderPreferences?.requirements?.map((req, i) => (
                     <li key={i}>{req}</li>
                   ))}
                 </ul>
@@ -127,7 +127,7 @@ const ProfileOverview = ({
                   <div>
                     <h3 className="font-semibold my-1">Shared</h3>
                     <ul className="list-disc pl-5">
-                      {profile.interests?.shared.map((interest, i) => (
+                      {profile.interests?.shared?.map((interest, i) => (
                         <li key={i}>{interest}</li>
                       ))}
                     </ul>
@@ -135,7 +135,7 @@ const ProfileOverview = ({
                   <div>
                     <h3 className="font-semibold my-1">Personal</h3>
                     <ul className="list-disc pl-5">
-                      {profile.interests?.personal.map((interest, i) => (
+                      {profile.interests?.personal?.map((interest, i) => (
                         <li key={i}>{interest}</li>
                       ))}
                     </ul>
