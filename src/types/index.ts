@@ -1,4 +1,4 @@
-export type Profile = {
+export type ProfileModel = {
   userId: string;
   name: string;
   location: string;
@@ -30,4 +30,14 @@ export type Profile = {
     personal: string[];
   };
   linkedIn?: string;
+};
+
+export type FilterModel = {
+  limit?: string;
+  skip?: string;
+  name?: string;
+  location?: string;
+  sumary?: string;
+  startupName?: string;
+  funding?: string;
 };
