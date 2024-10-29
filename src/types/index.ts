@@ -33,8 +33,6 @@ export type ProfileModel = {
 };
 
 export type FilterModel = {
-  limit?: string;
-  skip?: string;
   name?: string;
   location?: string;
   sumary?: string;
