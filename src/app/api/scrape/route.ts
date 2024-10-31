@@ -4,7 +4,8 @@ import playwright from "playwright";
 import { connectDB } from "@/lib/mongodb";
 import { Profile } from "@/models/Profile";
 
-export async function POST() {
+export async function POST(request: Request) {
+  const { ssoKey, susSession } = await request.json();
   const url = process.env.NEXT_PUBLIC_FETCH_URL;
 
   if (!url) {
@@ -46,14 +47,13 @@ export async function POST() {
     await context.addCookies([
       {
         name: "_sso.key",
-        value: "VwUqhHZdXDy7mhEE2GSiQNxL1AUv2SoK",
+        value: ssoKey,
         domain: ".startupschool.org",
         path: "/",
       },
       {
         name: "_sus_session",
-        value:
-          "1f1kH3wqJ5QyBeAy2N92AQyPS4XuPShY%2FpkF225HgKdH2rQ5gUnlc%2FwwsBoiASsROZ1IHE73LMxuU%2F0aAFx3r5%2BXdVzOpVkOk0VU%2F6qg9fK6etpP3IJNf5WPQZ9wKxalxWKD0ZLT6qbayNiITsxpFvhFQ0uwB1s9lBb9AUKCHKas%2FzQTxNmptWj3KRN3WUnbX34la2F44fRZJcbspkSamN%2F8IH%2FlIqnrin7Mr1iRUc86PA2xGgED5TBK4GuG3yB3%2FPfs81ppIkNGFu1qr5dLeGiwTcY%3D--oIq4isnVCtAvM2Qr--Wn%2Fi3TBFAPdsc8Pv2mtLOg%3D%3D",
+        value: susSession,
         domain: ".startupschool.org",
         path: "/",
       },
