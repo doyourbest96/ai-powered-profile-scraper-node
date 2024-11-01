@@ -10,12 +10,12 @@ const ProfileFilter = ({
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
+        <div className="flex flex-row items-center gap-2">
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-semibold text-nowrap text-gray-700"
           >
-            User Name
+            User Name:
           </label>
           <input
             type="text"
@@ -27,12 +27,12 @@ const ProfileFilter = ({
             placeholder="Enter name"
           />
         </div>
-        <div>
+        <div className="flex flex-row items-center gap-2">
           <label
             htmlFor="location"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-semibold text-nowrap text-gray-700"
           >
-            Location
+            Location:
           </label>
           <input
             type="text"
@@ -44,12 +44,12 @@ const ProfileFilter = ({
             placeholder="Enter location"
           />
         </div>
-        <div>
+        <div className="flex flex-row items-center gap-2">
           <label
             htmlFor="startup"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-semibold text-nowrap text-gray-700"
           >
-            Funding Status
+            Funding Status:
           </label>
           <input
             type="text"

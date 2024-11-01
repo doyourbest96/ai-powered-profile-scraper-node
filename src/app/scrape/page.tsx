@@ -1,9 +1,10 @@
+import Navbar from "@/components/Navbar/Navbar";
 import ProfileScraper from "@/components/Scraper/Scraper";
 
 const ScrapePage = () => {
   return (
     <div>
-      <h1>Scrape Page</h1>
+      <Navbar />
       <ProfileScraper />
     </div>
   );
