@@ -13,7 +13,7 @@ const ProfileFooter = ({
   setLimit: (limit: number) => void;
   setCurPage: (page: number) => void;
 }) => {
-  const limitOptions = [20, 50, 100];
+  const limitOptions = [10, 20, 50, 100];
 
   return (
     <div className="flex flex-row justify-between items-center">
