@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ProfileModel } from "@/types";
 
 const ProfileTable = ({
@@ -14,19 +15,12 @@ const ProfileTable = ({
       <div className="h-full overflow-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <table className="min-w-full divide-y divide-gray-200 relative">
           <thead className="text-left bg-gray-50 sticky top-0 z-10">
-            <tr>
-              <th className="p-4 font-semibold text-gray-600 uppercase">
-                Name
-              </th>
-              <th className="p-4 font-semibold text-gray-600 uppercase">
-                Location
-              </th>
-              <th className="p-4 font-semibold text-gray-600 uppercase">
-                Funding Status
-              </th>
-              <th className="p-4 font-semibold text-gray-600 uppercase">
-                Last Seen
-              </th>
+            <tr className="font-semibold text-gray-600 uppercase">
+              <th className="p-4"></th>
+              <th className="p-4">Name</th>
+              <th className="p-4">Location</th>
+              <th className="p-4">Funding Status</th>
+              <th className="p-4">Last Seen</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -43,16 +37,25 @@ const ProfileTable = ({
                   className="even:bg-blue-100 hover:bg-gray-300 hover:cursor-pointer"
                   onClick={handleOverview.bind(null, profile)}
                 >
-                  <td className="px-2 py-2 whitespace-nowrap">
+                  <td className="p-2">
+                    <Image
+                      src={profile.avatar || ""}
+                      alt="Profile"
+                      width={36}
+                      height={36}
+                      className="rounded-full"
+                    />
+                  </td>
+                  <td className="p-2 whitespace-nowrap">
                     {profile.name || "N/A"}
                   </td>
-                  <td className="px-2 py-2 whitespace-nowrap">
+                  <td className="p-2 whitespace-nowrap">
                     {profile.location || "N/A"}
                   </td>
-                  <td className="px-2 py-2 max-w-80 text-ellipsis overflow-hidden whitespace-nowrap">
+                  <td className="p-2 max-w-80 text-ellipsis overflow-hidden whitespace-nowrap">
                     {profile.startup?.funding || "N/A"}
                   </td>
-                  <td className="px-2 py-2 whitespace-nowrap">
+                  <td className="p-2 whitespace-nowrap">
                     {profile.lastSeen || "N/A"}
                   </td>
                 </tr>
