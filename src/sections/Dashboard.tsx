@@ -5,6 +5,7 @@ import ProfileOverview from "@/sections/ProfileOverview";
 import ProfileFilter from "@/components/ProfileFilter/ProfileFilter";
 import ProfileTable from "@/components/ProfileTable/ProfileTable";
 import ProfileFooter from "@/components/ProfileFooter/ProfileFooter";
+import Navbar from "@/components/Navbar/Navbar";
 
 const Dashboard = () => {
   const [total, setTotal] = React.useState(0);
@@ -80,22 +81,29 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="relative p-5 w-full h-screen flex flex-col gap-6">
-        <ProfileOverview
-          profile={profile}
-          show={overview}
-          handleClose={handleOverviewClose}
-        />
-        <ProfileFilter filter={filter} handleChange={handleFilterChange} />
-        <ProfileTable loading={loading} profiles={profiles} handleOverview={handleOverview} />
-        <ProfileFooter
-          total={total}
-          matched={matched}
-          curPage={curPage}
-          limit={limit}
-          setCurPage={setCurPage}
-          setLimit={setLimit}
-        />
+      <div className="flex flex-col w-full h-screen">
+        <Navbar />
+        <div className="relative p-5 flex flex-1 flex-col gap-6 overflow-auto">
+          <ProfileOverview
+            profile={profile}
+            show={overview}
+            handleClose={handleOverviewClose}
+          />
+          <ProfileFilter filter={filter} handleChange={handleFilterChange} />
+          <ProfileTable
+            loading={loading}
+            profiles={profiles}
+            handleOverview={handleOverview}
+          />
+          <ProfileFooter
+            total={total}
+            matched={matched}
+            curPage={curPage}
+            limit={limit}
+            setCurPage={setCurPage}
+            setLimit={setLimit}
+          />
+        </div>
       </div>
     </>
   );
