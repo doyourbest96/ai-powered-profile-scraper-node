@@ -16,6 +16,7 @@ const Navbar = () => {
             />
           </Link>
         </div>
+        
         <div className="flex space-x-8">
           <Link href="/">
             <button className="text-white hover:text-gray-300">
