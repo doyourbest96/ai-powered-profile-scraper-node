@@ -39,7 +39,7 @@ const ProfileTable = ({
                 >
                   <td className="p-2">
                     <Image
-                      src={profile.avatar || ""}
+                      src={profile.avatar || "avatar"}
                       alt="Profile"
                       width={36}
                       height={36}
