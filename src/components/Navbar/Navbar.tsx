@@ -23,9 +23,9 @@ const Navbar = () => {
               Dashboard
             </button>
           </Link>
-          <Link href="/scrape">
+          {/* <Link href="/scrape">
             <button className="text-white hover:text-gray-300">Scrape</button>
-          </Link>
+          </Link> */}
           <Link href="/about">
             <button className="text-white hover:text-gray-300">About</button>
           </Link>
