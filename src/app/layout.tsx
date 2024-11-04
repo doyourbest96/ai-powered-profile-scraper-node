@@ -1,5 +1,10 @@
+import Head from "next/head";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+
+import Navbar from "@/components/Navbar/Navbar";
+import { ToastContainer } from "react-toastify";
+
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -29,7 +34,29 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Head>
+          <title>Web Scraper</title>
+          <meta name="description" content="Scrape product data easily" />
+        </Head>
+
+        <main>
+          <div className="flex flex-col w-full h-screen">
+            <Navbar />
+            {children}
+            <ToastContainer
+              position="top-right"
+              autoClose={2500}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss={false}
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </div>
+        </main>
       </body>
     </html>
   );
