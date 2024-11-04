@@ -3,8 +3,8 @@ import Image from "next/image";
 
 const About = () => {
   return (
-    <div className="w-full h-full">
-      <div className="max-w-80 p-12 flex flex-col justify-center items-center gap-4">
+    <div className="w-full h-full flex justify-center items-center">
+      <div className="max-w-lg p-12 flex flex-col justify-center items-center gap-4">
         <h1 className="text-4xl font-semibold">Profile Scraper</h1>
         <p className="text-xl">Powered Profile Scraper by @Victor</p>
         <p className="text-lg">
@@ -15,8 +15,8 @@ const About = () => {
           <Image
             src="/cutestar.png"
             alt="Logo"
-            width={100}
-            height={100}
+            width={160}
+            height={160}
             className="h-10 w-10 rounded-full"
           />
         </Link>
