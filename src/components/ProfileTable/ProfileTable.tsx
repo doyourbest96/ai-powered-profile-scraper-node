@@ -24,43 +24,45 @@ const ProfileTable = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {loading ? (
-              <tr>
-                <td colSpan={5} className="text-center">
-                  Loading...
-                </td>
-              </tr>
-            ) : (
-              profiles.map((profile, index) => (
-                <tr
-                  key={profile.userId || index}
-                  className="even:bg-blue-100 hover:bg-gray-300 hover:cursor-pointer"
-                  onClick={handleOverview.bind(null, profile)}
-                >
-                  <td className="p-2">
-                    <Image
-                      src={profile.avatar || "avatar"}
-                      alt="Profile"
-                      width={36}
-                      height={36}
-                      className="rounded-full"
-                    />
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {profile.name || "N/A"}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {profile.location || "N/A"}
-                  </td>
-                  <td className="p-2 max-w-80 text-ellipsis overflow-hidden whitespace-nowrap">
-                    {profile.startup?.funding || "N/A"}
-                  </td>
-                  <td className="p-2 whitespace-nowrap">
-                    {profile.lastSeen || "N/A"}
-                  </td>
-                </tr>
-              ))
-            )}
+            {loading
+              ? Array(5)
+                  .fill(null)
+                  .map((_, index) => (
+                    <tr key={`loading-${index}`}>
+                      <td colSpan={5} className="text-center p-4">
+                        <div className="animate-pulse bg-gray-200 h-4 rounded"></div>
+                      </td>
+                    </tr>
+                  ))
+              : profiles.map((profile, index) => (
+                  <tr
+                    key={profile.userId || index}
+                    className="even:bg-blue-100 hover:bg-gray-300 hover:cursor-pointer"
+                    onClick={handleOverview.bind(null, profile)}
+                  >
+                    <td className="p-2">
+                      <Image
+                        src={profile.avatar || "/cutestar.png"} // Use a static fallback image
+                        alt="Profile"
+                        width={36}
+                        height={36}
+                        className="rounded-full"
+                      />
+                    </td>
+                    <td className="p-2 whitespace-nowrap">
+                      {profile.name || "N/A"}
+                    </td>
+                    <td className="p-2 whitespace-nowrap">
+                      {profile.location || "N/A"}
+                    </td>
+                    <td className="p-2 max-w-80 text-ellipsis overflow-hidden whitespace-nowrap">
+                      {profile.startup?.funding || "N/A"}
+                    </td>
+                    <td className="p-2 whitespace-nowrap">
+                      {profile.lastSeen ? profile.lastSeen : "N/A"}
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </table>
       </div>

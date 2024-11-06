@@ -1,7 +1,8 @@
-import Head from "next/head";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ThemeProvider } from "next-themes";
 
+import ThemeToggle from "@/components/Theme/ThemeToggle";
 import Navbar from "@/components/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 
@@ -22,6 +23,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Grab Profiles",
   description: "Generated for scrape profile data",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -34,28 +38,28 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Head>
-          <title>Web Scraper</title>
-          <meta name="description" content="Scrape product data easily" />
-        </Head>
-
         <main>
-          <div className="flex flex-col w-full h-screen">
-            <Navbar />
-            {children}
-            <ToastContainer
-              position="top-right"
-              autoClose={2500}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss={false}
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </div>
+          <ThemeProvider attribute="class">
+            <div className="flex flex-col w-full h-screen">
+              <div className="fixed z-50 top-0 right-0 mt-4 mr-4">
+                <ThemeToggle />
+              </div>
+              <Navbar />
+              {children}
+              <ToastContainer
+                position="top-right"
+                autoClose={2500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </div>
+          </ThemeProvider>
         </main>
       </body>
     </html>
