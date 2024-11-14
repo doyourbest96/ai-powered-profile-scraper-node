@@ -77,14 +77,14 @@ export default function ProfileScraper() {
       <div className="flex flex-row justify-center items-center gap-4 mb-8">
         <button
           onClick={handleScrapeOne}
-          disabled={loading}
+          disabled={loading || ssoKey === "" || susSession === "" || url === ""}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
         >
           {loading ? "Loading..." : "Scrape One"}
         </button>
         <button
           onClick={handleScrape}
-          disabled={loading}
+          disabled={loading || ssoKey === "" || susSession === ""}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
         >
           {loading ? "Loading..." : "Scrape Many"}
