@@ -11,7 +11,11 @@ const About = () => {
           If you have any question about this, please contact{" "}
           <strong>@doyourbest</strong> in discord
         </p>
-        <Link href="/">
+        <Link
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/doyourbest96/next-scraper"
+        >
           <Image
             src="/cutestar.png"
             alt="Logo"
