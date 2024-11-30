@@ -82,13 +82,17 @@ export default function ProfileScraper() {
         >
           {loading ? "Loading..." : "Scrape One"}
         </button>
-        <button
-          onClick={handleScrape}
-          disabled={loading || ssoKey === "" || susSession === ""}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-        >
-          {loading ? "Loading..." : "Scrape Many"}
-        </button>
+        {loading ? (
+          <button
+            onClick={handleScrape}
+            disabled={loading || ssoKey === "" || susSession === ""}
+            className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          >
+            {loading ? "Loading..." : "Scrape Many"}
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
     </div>
