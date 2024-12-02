@@ -27,7 +27,7 @@ const ProfileOverview = ({
       }`}
     >
       <div className="w-1/2" onClick={handleClose}></div>
-      <div className="w-1/2">
+      <div className="w-1/2 overflow-auto">
         {profile && (
           <div className="bg-white rounded-l-lg shadow-lg p-6">
             <div className="flex items-center gap-6 mb-6">
