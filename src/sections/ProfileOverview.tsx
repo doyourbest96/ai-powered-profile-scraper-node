@@ -1,6 +1,10 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { BsSend } from "react-icons/bs";
 import { FaRegCopy } from "react-icons/fa6";
+import { WiCloudRefresh } from "react-icons/wi";
 import { ProfileModel } from "@/types";
 import { toast } from "react-toastify";
 
@@ -15,11 +19,28 @@ const ProfileOverview = ({
   profile,
   show,
   handleClose,
+  handleUpdate,
 }: {
   profile: ProfileModel | null;
   show: boolean;
   handleClose: () => void;
+  handleUpdate: (profile: ProfileModel) => void;
 }) => {
+  const updateProfile = async (url: string) => {
+    const response = await fetch("/api/scrape-one", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url }),
+    });
+
+    if (!response.ok) toast.error("Failed to fetch profile");
+    else {
+      const data = await response.json();
+      handleUpdate(data.profile);
+      toast.success("Profile fetched successfully");
+    }
+  };
+
   return (
     <div
       className={`absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 overflow-auto flex flex-row z-50 ${
@@ -29,7 +50,7 @@ const ProfileOverview = ({
       <div className="w-1/2" onClick={handleClose}></div>
       <div className="w-1/2 overflow-auto">
         {profile && (
-          <div className="bg-white rounded-l-lg shadow-lg p-6">
+          <div className="bg-white dark:bg-gray-900 rounded-l-lg shadow-lg p-6">
             <div className="flex items-center gap-6 mb-6">
               {profile.avatar && (
                 <Image
@@ -44,11 +65,24 @@ const ProfileOverview = ({
                 <div className="flex flex-row gap-4">
                   <h1 className="text-2xl font-bold">{profile.name}</h1>
                   <button
-                    className="p-1.5 text-xs rounded-md border text-white bg-blue-400 hover:bg-blue-500"
+                    className="p-1.5 text-xs rounded-md border text-white dark:text-gray-900 bg-blue-400 hover:bg-blue-500"
                     onClick={() => copyToClipboard(SITE_URL + profile.userId)}
                   >
                     <FaRegCopy className="w-4 h-4" />
                   </button>
+                  <button
+                    className="p-0.5 text-xs rounded-md border text-white dark:text-gray-900 bg-blue-400 hover:bg-blue-500"
+                    onClick={() => updateProfile(SITE_URL + profile.userId)}
+                  >
+                    <WiCloudRefresh className="w-6 h-6" />
+                  </button>
+                  <Link
+                    target="_blank"
+                    href={SITE_URL + profile.userId}
+                    className="p-1.5 text-xs rounded-md border text-white dark:text-gray-900 bg-green-400 hover:bg-green-500"
+                  >
+                    <BsSend className="w-4 h-4" />
+                  </Link>
                 </div>
                 <p>{profile.location}</p>
                 <p>{profile?.age} years old</p>
@@ -82,13 +116,13 @@ const ProfileOverview = ({
                 <p>{profile.accomplishments}</p>
                 <h3 className="font-semibold my-1">Education</h3>
                 <ul className="list-disc pl-5">
-                  {profile.education.map((item, idx) => (
+                  {profile.education?.map((item, idx) => (
                     <li key={idx}>{item}</li>
                   ))}
                 </ul>
                 <h3 className="font-semibold my-1">Employment</h3>
                 <ul className="list-disc pl-5">
-                  {profile.employment.map((item, idx) => (
+                  {profile.employment?.map((item, idx) => (
                     <li key={idx}>{item}</li>
                   ))}
                 </ul>
