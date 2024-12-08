@@ -17,6 +17,7 @@ const Dashboard = () => {
   const [profiles, setProfiles] = React.useState<ProfileModel[]>([]);
   const [filter, setFilter] = React.useState<FilterModel>({
     name: "",
+    age: 0,
     location: "",
     funding: "",
   });
@@ -69,6 +70,13 @@ const Dashboard = () => {
     }));
   };
 
+  const handleUpdate = (profile: ProfileModel) => {
+    setProfiles(
+      profiles.map((p) => (p.userId === profile.userId ? profile : p))
+    );
+    setProfile(profile);
+  };
+
   const handleOverview = (profile: ProfileModel) => {
     setProfile(profile);
     setOverview(true);
@@ -84,6 +92,7 @@ const Dashboard = () => {
         <ProfileOverview
           profile={profile}
           show={overview}
+          handleUpdate={handleUpdate}
           handleClose={handleOverviewClose}
         />
         <ProfileFilter filter={filter} handleChange={handleFilterChange} />
