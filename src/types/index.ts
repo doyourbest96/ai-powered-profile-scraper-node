@@ -34,6 +34,7 @@ export type ProfileModel = {
 
 export type FilterModel = {
   name?: string;
+  age?: number;
   location?: string;
   sumary?: string;
   startupName?: string;
