@@ -5,7 +5,10 @@ import { connectDB } from "@/lib/mongodb";
 import { Profile } from "@/models/Profile";
 
 export async function POST(request: Request) {
-  const { url, ssoKey, susSession } = await request.json();
+  let { url, ssoKey, susSession } = await request.json();
+  url = url || process.env.NEXT_PUBLIC_FETCH_URL;
+  ssoKey = ssoKey || process.env.NEXT_PUBLIC_SSO_KEY;
+  susSession = susSession || process.env.NEXT_PUBLIC_SUS_SESSION;
 
   if (!url) {
     return NextResponse.json({ error: "URL is required" }, { status: 400 });
@@ -193,7 +196,7 @@ export async function POST(request: Request) {
       new: true,
     });
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, profile: profile }, { status: 200 });
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
