@@ -82,7 +82,7 @@ export default function ProfileScraper() {
         >
           {loading ? "Loading..." : "Scrape One"}
         </button>
-        {loading ? (
+        {!loading && (
           <button
             onClick={handleScrape}
             disabled={loading || ssoKey === "" || susSession === ""}
@@ -90,8 +90,6 @@ export default function ProfileScraper() {
           >
             {loading ? "Loading..." : "Scrape Many"}
           </button>
-        ) : (
-          <></>
         )}
       </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
