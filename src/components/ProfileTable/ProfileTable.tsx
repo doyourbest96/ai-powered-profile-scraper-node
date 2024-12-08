@@ -14,8 +14,8 @@ const ProfileTable = ({
     <div className="flex-1 overflow-hidden">
       <div className="h-full overflow-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         <table className="min-w-full divide-y divide-gray-200 relative">
-          <thead className="text-left bg-gray-50 sticky top-0 z-10">
-            <tr className="font-semibold text-gray-600 uppercase">
+          <thead className="text-left bg-gray-50 dark:bg-gray-800 shadow-lg sticky top-0 z-10">
+            <tr className="font-semibold text-gray-600 dark:text-gray-400 uppercase">
               <th className="p-4"></th>
               <th className="p-4">Name</th>
               <th className="p-4">Location</th>
@@ -25,19 +25,19 @@ const ProfileTable = ({
           </thead>
           <tbody className="divide-y divide-gray-200">
             {loading
-              ? Array(5)
+              ? Array(12)
                   .fill(null)
                   .map((_, index) => (
                     <tr key={`loading-${index}`}>
                       <td colSpan={5} className="text-center p-4">
-                        <div className="animate-pulse bg-gray-200 h-4 rounded"></div>
+                        <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-4 rounded"></div>
                       </td>
                     </tr>
                   ))
               : profiles.map((profile, index) => (
                   <tr
                     key={profile.userId || index}
-                    className="even:bg-blue-100 hover:bg-gray-300 hover:cursor-pointer"
+                    className="even:bg-gray-100 dark:even:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-600 hover:cursor-pointer"
                     onClick={handleOverview.bind(null, profile)}
                   >
                     <td className="p-2">
