@@ -8,12 +8,14 @@ export async function GET(request: Request) {
   const limit = parseInt(url.searchParams.get("limit") || "100");
   const page = parseInt(url.searchParams.get("page") || "1");
   const name = url.searchParams.get("name");
+  const age = url.searchParams.get("age");
   const location = url.searchParams.get("location");
   const funding = url.searchParams.get("funding");
 
   const skip = (page - 1) * limit;
   const query: FilterQuery<typeof Profile> = {};
 
+  if (age) query.age = { $gte: parseInt(age) };
   if (name) query.name = { $regex: name, $options: "i" };
   if (location) query.location = { $regex: location, $options: "i" };
   if (funding) query["startup.funding"] = { $regex: funding, $options: "i" };

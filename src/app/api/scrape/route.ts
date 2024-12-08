@@ -5,8 +5,10 @@ import { connectDB } from "@/lib/mongodb";
 import { Profile } from "@/models/Profile";
 
 export async function POST(request: Request) {
-  const { ssoKey, susSession } = await request.json();
+  let { ssoKey, susSession } = await request.json();
   const url = process.env.NEXT_PUBLIC_FETCH_URL;
+  ssoKey = ssoKey || process.env.NEXT_PUBLIC_SSO_KEY;
+  susSession = susSession || process.env.NEXT_PUBLIC_SUS_SESSION;
 
   if (!url) {
     return NextResponse.json({ error: "URL is required" }, { status: 400 });
