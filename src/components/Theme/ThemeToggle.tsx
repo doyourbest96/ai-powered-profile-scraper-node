@@ -1,28 +1,23 @@
 "use client";
-import { useTheme } from "next-themes";
-import { MoonIcon } from "@heroicons/react/24/solid";
-import { SunIcon } from "@heroicons/react/24/solid";
+import React from "react";
+import { motion } from "framer-motion";
+import { FaSun, FaMoon } from "react-icons/fa";
+import { useTheme } from "../../contexts/ThemeContext";
 
-export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-
-  const handleThemeChange = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-    console.log(theme);
-  };
+const ThemeToggle = () => {
+  const { isDark, setIsDark } = useTheme();
 
   return (
-    <>
-      <button
-        onClick={handleThemeChange}
-        className="p-2 rounded-full shadow-md bg-gray-100"
-      >
-        {theme === "dark" ? (
-          <SunIcon className="w-6 h-6 text-gray-500 fill-gray-500" />
-        ) : (
-          <MoonIcon className="w-6 h-6 text-gray-500 fill-gray-500" />
-        )}
-      </button>
-    </>
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      onClick={() => setIsDark(!isDark)}
+      className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+      aria-label="Toggle theme"
+    >
+      {isDark ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
+    </motion.button>
   );
-}
+};
+
+export default ThemeToggle;
