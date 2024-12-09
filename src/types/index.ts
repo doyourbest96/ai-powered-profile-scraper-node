@@ -1,3 +1,10 @@
+export type AuthContextProps = {
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  token: string | null;
+  setToken: (token: string | null) => void;
+};
+
 export type ProfileModel = {
   userId: string;
   name: string;
