@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 import { AuthContextProps } from "@/types";
 
@@ -16,13 +16,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState<string | null>(null);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
     setIsAuthenticated(true);
-    router.push("/");
-  }, [router]);
+    // router.push("/");
+  }, []);
+  
   return (
     <Context.Provider value={{ isLoading, isAuthenticated, token, setToken }}>
       {children}
