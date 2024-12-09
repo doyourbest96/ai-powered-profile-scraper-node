@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { ThemeProvider } from "@/contexts/ThemeContext";
+import MainProvider from "@/contexts";
 
 import ThemeToggle from "@/components/Theme/ThemeToggle";
 import Navbar from "@/components/Navbar/Navbar";
@@ -39,7 +39,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <main>
-          <ThemeProvider>
+          <MainProvider>
             <div className="flex flex-col w-full h-screen">
               <div className="fixed z-50 top-0 right-0 mt-4 mr-4">
                 <ThemeToggle />
@@ -59,7 +59,7 @@ export default function RootLayout({
                 theme="light"
               />
             </div>
-          </ThemeProvider>
+          </MainProvider>
         </main>
       </body>
     </html>
