@@ -15,7 +15,14 @@ export async function GET(request: Request) {
   const skip = (page - 1) * limit;
   const query: FilterQuery<typeof Profile> = {};
 
-  if (age) query.age = { $gte: parseInt(age) };
+  // Ensure age is parsed as an integer before using it in the query
+  if (age) {
+    const parsedAge = parseInt(age);
+    if (!isNaN(parsedAge)) {
+      query.age = { $gte: parsedAge };
+    }
+  }
+
   if (name) query.name = { $regex: name, $options: "i" };
   if (location) query.location = { $regex: location, $options: "i" };
   if (funding) query["startup.funding"] = { $regex: funding, $options: "i" };
@@ -27,7 +34,7 @@ export async function GET(request: Request) {
     const total = await Profile.countDocuments();
     const matched = await Profile.countDocuments(query);
 
-    // After scraping the profile data
+    // Fetch profiles based on the query
     const profiles = await Profile.find(query)
       .limit(limit)
       .skip(skip)
@@ -35,7 +42,7 @@ export async function GET(request: Request) {
       .exec();
 
     return NextResponse.json(
-      { data: profiles, total: total, matched: matched },
+      { data: profiles, total, matched }, // Simplified object syntax
       { status: 200 }
     );
   } catch (error: unknown) {
@@ -48,6 +55,9 @@ export async function GET(request: Request) {
       stack: errorStack,
     });
 
-    return NextResponse.json({ data: [] }, { status: 500 });
+    return NextResponse.json(
+      { data: [], message: errorMessage },
+      { status: 500 }
+    ); // Added error message to response
   }
 }
