@@ -44,8 +44,8 @@ const ProfileTable = ({
                       <Image
                         src={profile.avatar || "/cutestar.png"} // Use a static fallback image
                         alt="Profile"
-                        width={36}
-                        height={36}
+                        width={72}
+                        height={72}
                         className="rounded-full"
                       />
                     </td>
