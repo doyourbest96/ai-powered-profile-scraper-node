@@ -8,8 +8,8 @@ const About = () => {
         <h1 className="text-4xl font-semibold">Profile Scraper</h1>
         <p className="text-xl">Powered Profile Scraper by @Victor</p>
         <p className="text-lg">
-          If you have any question about this, please contact{" "}
-          <strong>@doyourbest</strong> in discord
+          If you have any questions about this, please contact{" "}
+          <strong>@doyourbest</strong> on Discord.
         </p>
         <Link
           target="_blank"
@@ -19,8 +19,8 @@ const About = () => {
           <Image
             src="/cutestar.png"
             alt="Logo"
-            width={160}
-            height={160}
+            width={320}
+            height={320}
             className="h-10 w-10 rounded-full"
           />
         </Link>
