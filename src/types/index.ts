@@ -37,13 +37,13 @@ export type ProfileModel = {
     personal: string[];
   };
   linkedIn?: string;
+  updatedAt: Date;
 };
 
 export type FilterModel = {
-  name?: string;
-  age?: number;
-  location?: string;
-  sumary?: string;
-  startupName?: string;
-  funding?: string;
-};
+  name: string;
+  age: number;
+  location: string;
+  funding: string;
+  lastSeen: string;
+}
