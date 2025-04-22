@@ -35,12 +35,29 @@ const ProfileSchema = new mongoose.Schema({
     personal: [String],
   },
   linkedIn: String,
+
+  // New fields for refresh tracking
+  lastRefreshed: { type: Date, default: null },
+  refreshStatus: {
+    type: String,
+    enum: ["pending", "success", "failed", null],
+    default: null,
+  },
+  refreshError: { type: String, default: null },
+  refreshAttempts: { type: Number, default: 0 },
+
   createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
   status: {
     type: String,
     enum: ["default", "active", "pending", "archived"],
     default: "default",
-  }
+  },
+});
+
+ProfileSchema.pre("save", function (next) {
+  this.updatedAt = new Date();
+  next();
 });
 
 export const Profile =
