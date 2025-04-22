@@ -21,6 +21,7 @@ const ProfileTable = ({
               <th className="p-4">Location</th>
               <th className="p-4">Funding Status</th>
               <th className="p-4">Last Seen</th>
+              <th className="p-4">Last Updated</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -29,7 +30,7 @@ const ProfileTable = ({
                   .fill(null)
                   .map((_, index) => (
                     <tr key={`loading-${index}`}>
-                      <td colSpan={5} className="text-center p-4">
+                      <td colSpan={6} className="text-center p-4">
                         <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-4 rounded"></div>
                       </td>
                     </tr>
@@ -60,6 +61,11 @@ const ProfileTable = ({
                     </td>
                     <td className="p-2 whitespace-nowrap">
                       {profile.lastSeen ? profile.lastSeen : "N/A"}
+                    </td>
+                    <td className="p-2 whitespace-nowrap">
+                      {profile.updatedAt
+                        ? new Date(profile.updatedAt).toLocaleDateString()
+                        : "N/A"}
                     </td>
                   </tr>
                 ))}

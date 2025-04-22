@@ -9,7 +9,7 @@ const ProfileFilter = ({
 }) => {
   return (
     <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div className="flex flex-row items-center gap-2">
           <label
             htmlFor="name"
@@ -63,7 +63,7 @@ const ProfileFilter = ({
         </div>
         <div className="flex flex-row items-center gap-2">
           <label
-            htmlFor="startup"
+            htmlFor="funding"
             className="block text-sm font-semibold text-nowrap text-gray-500"
           >
             Funding Status:
@@ -76,6 +76,23 @@ const ProfileFilter = ({
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
             placeholder="Enter funding"
+          />
+        </div>
+        <div className="flex flex-row items-center gap-2">
+          <label
+            htmlFor="lastSeen"
+            className="block text-sm font-semibold text-nowrap text-gray-500"
+          >
+            Last Seen:
+          </label>
+          <input
+            type="text"
+            name="lastSeen"
+            id="lastSeen"
+            value={filter?.lastSeen}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
+            placeholder="Enter last seen"
           />
         </div>
       </div>
