@@ -24,8 +24,15 @@ const Navbar = () => {
             </button>
           </Link>
           {/* <Link href="/scrape">
-            <button className="text-white hover:text-gray-300">Scrape</button>
+            <button className="text-white hover:text-gray-300">
+              Scrape
+            </button>
           </Link> */}
+          <Link href="/refresh">
+            <button className="text-white hover:text-gray-300">
+              Refresh Status
+            </button>
+          </Link>
           <Link href="/about">
             <button className="text-white hover:text-gray-300">About</button>
           </Link>
