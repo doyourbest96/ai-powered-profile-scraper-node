@@ -20,6 +20,7 @@ const Dashboard = () => {
     age: 0,
     location: "",
     funding: "",
+    lastSeen: "",
   });
 
   const fetchProfiles = useCallback(async () => {
