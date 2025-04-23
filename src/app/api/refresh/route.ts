@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     const userId = url.searchParams.get("userId"); // Optional: refresh specific profile
 
     // Get authentication from environment variables
-    const baseUrl = process.env.NEXT_PUBLIC_FETCH_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
     const ssoKey = process.env.NEXT_PUBLIC_SSO_KEY;
     const susSession = process.env.NEXT_PUBLIC_SUS_SESSION;
 
