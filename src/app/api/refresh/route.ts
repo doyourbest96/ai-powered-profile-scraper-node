@@ -32,8 +32,20 @@ export async function GET(request: Request) {
       );
     }
 
+    // First, remove all profiles that have refreshAttempts over 3
+    const deleteResult = await Profile.deleteMany({
+      refreshAttempts: { $gt: 3 },
+    });
+    console.log(
+      `Deleted ${deleteResult.deletedCount} profiles with more than 3 refresh attempts`
+    );
+
     // Build query for profiles to refresh
     const query: Record<string, unknown> = {};
+
+    // Calculate date 1 day ago
+    const oneDayAgo = new Date();
+    oneDayAgo.setDate(oneDayAgo.getDate() - 1);
 
     // If userId is provided, refresh only that specific profile
     if (userId) {
@@ -42,10 +54,14 @@ export async function GET(request: Request) {
       // Otherwise, prioritize profiles that:
       // 1. Have never been refreshed (lastRefreshed is null)
       // 2. Have failed refreshes but fewer than 3 attempts
-      // 3. Were refreshed longest time ago
+      // 3. Have pending status (include pending profiles)
+      // 4. Were refreshed more than 1 day ago
+      // 5. Were refreshed longest time ago
       query.$or = [
         { lastRefreshed: null },
-        { refreshStatus: "failed", refreshAttempts: { $lt: 3 } },
+        { refreshStatus: "failed" },
+        { refreshStatus: "pending" },
+        { lastRefreshed: { $lt: oneDayAgo } },
       ];
     }
 
@@ -107,6 +123,7 @@ export async function GET(request: Request) {
       total: profilesToRefresh.length,
       updated: 0,
       failed: 0,
+      deleted: 0,
       errors: [] as string[],
     };
 
@@ -116,10 +133,22 @@ export async function GET(request: Request) {
         const profileUrl = `${baseUrl}/${profile.userId}`;
 
         // Navigate to the profile page
-        await page.goto(profileUrl, {
+        const response = await page.goto(profileUrl, {
           waitUntil: "domcontentloaded",
           timeout: 30000,
         });
+
+        // Check if the page is a 404 (profile deleted)
+        if (
+          response?.status() === 404 ||
+          (await page.title()).includes("Page Not Found (404)")
+        ) {
+          // Delete the profile from our database
+          await Profile.deleteOne({ userId: profile.userId });
+          results.deleted++;
+          console.log(`Deleted profile ${profile.userId} (404 Not Found)`);
+          continue; // Skip to the next profile
+        }
 
         // Wait for the main content to load
         await page.waitForSelector(".css-139x40p");
@@ -127,6 +156,15 @@ export async function GET(request: Request) {
         // Get the page content
         const content = await page.content();
         const $ = cheerio.load(content);
+
+        // Check if the page contains the 404 message
+        if (content.includes("Page Not Found (404)")) {
+          // Delete the profile from our database
+          await Profile.deleteOne({ userId: profile.userId });
+          results.deleted++;
+          console.log(`Deleted profile ${profile.userId} (404 Not Found)`);
+          continue; // Skip to the next profile
+        }
 
         const mainContent = $(".css-139x40p");
         const age = mainContent.find('[title="Age"]').text().replace(/\D/g, "");
@@ -240,6 +278,7 @@ export async function GET(request: Request) {
           linkedIn: mainContent.find(".css-107cmgv").attr("title"),
           lastRefreshed: new Date(),
           refreshStatus: "success",
+          refreshAttempts: 0,
           refreshError: null,
           updatedAt: new Date(),
         };
@@ -283,6 +322,7 @@ export async function GET(request: Request) {
     return NextResponse.json({
       message: "Profile refresh completed",
       results,
+      deletedProfiles: deleteResult.deletedCount + results.deleted,
     });
   } catch (error) {
     const errorMessage =
